@@ -1,31 +1,66 @@
 # A3 — Watching the Machine
 
-A starter notebook for HCDE 410 Assignment 3, in which **AI is the subject of study, not the author.** You investigate the reliability and reproducibility of large language models (LLMs) through a small mixed-methods study, then reflect on what it means for trustworthy research.
+My submission for HCDE 410 Assignment 3. In this assignment, **AI is the subject of study, not the author.** It is a small mixed-methods study of how reliable and reproducible large language models (LLMs) are, and how people check what they produce.
 
-## What this notebook is
+## What's in this repo
 
-`A3_watching_the_machine_starter.ipynb` is a scaffold with prompts and empty cells for you to fill in as you work. It walks through five parts:
+| File | What it is |
+|---|---|
+| `A3_watching_the_machine_starter.ipynb` | The main deliverable. All five sections, with written answers and the code that loads and summarizes the data. |
+| `A3_watching_the_machine_starter.html` | The same notebook exported to HTML (with outputs), so it can be read without Jupyter. |
+| `a3_runs.xlsx` / `a3_runs.csv` | The reproducibility probe log: one row per run. The notebook reads the CSV. |
+| `a3_codes.xlsx` / `a3_codes.csv` | Coded field notes from the observation: one row per note, with a theme. The notebook reads the CSV. |
+| `LICENSE` | MIT License. |
 
-1. **Prior practice** — a short written reflection on how you currently use LLMs and what they assume about your reliability.
-2. **Reproducibility probe** — pick one task with a *checkable* answer, run the same prompt **3 times in one model** and **once in a second model**, and log every run verbatim in a pandas DataFrame (prompt, model, version, timestamp, output, verified, notes). A short helper cell summarizes the log (run count, distinct outputs, verification tally).
-3. **Observation** — watch 1–2 people do a comparable task with an LLM (with permission, no audio/video, nothing personal or sensitive), take timestamped field notes, and group them into themes in a second DataFrame.
-4. **Synthesis & reflection** — bring the probe and observation together into one account about trustworthy, reproducible research and what the student will change in their own AI use.
-5. **Competency declaration & AI use** — state which course competencies the work demonstrates (*qualitative & mixed-methods inquiry*, *reproducible analysis*, *ethical & societal reasoning*) and disclose any AI use per course policy.
+The `.xlsx` files are where the data is entered and edited. The `.csv` files are exported from them and are what the notebook actually loads.
 
-## Deliverable & workflow
+## The study
 
-- Fill in each section directly in the notebook (name and date at the top).
-- Commit to your `hcde-410` repo **as you work** — commit history is part of what you hand in.
-- Do the analysis and writing yourself: in this assignment AI is your subject, not your author.
+The notebook has five parts:
+
+1. **Prior practice:** how I use LLMs now and what I assume about their reliability.
+2. **Reproducibility probe:** I gave the same prompt (write Python code that summarizes a list of ten numbers: min, max, range, median, mode, Q1, Q3, IQR, and the sorted list) to Claude Opus 5.5 three times and to ChatGPT (GPT-6 Instant) once. I logged every output in full and checked each one against answers worked out by hand and by running the code.
+3. **Observation:** field notes on two people (P1 and P2) using Claude Haiku 5.5 to summarize why AI has raised RAM prices, and to check the answer however they normally would. Each note is coded with a theme, and the themes are counted by person.
+4. **Synthesis & reflection:** what the probe and the observation mean together for trustworthy, reproducible research, and what I'll change in my own work.
+5. **Competency declaration & AI use.**
+
+### Main findings
+
+- **Same prompt, different results.** All three Claude runs gave the correct numbers, but the code, formatting, and side notes were different every time. Saving the prompt is not enough to reproduce a result.
+- **The errors were around the answer, not in it.** ChatGPT's "expected output" listed a Q3 and IQR that its own code would never print. One of Claude's side notes gave a wrong value for a different Python function. Both were stated with full confidence.
+- **People's checks didn't target those errors.** In the observation, people judged format first, asked the same AI whether it was right, and stopped once something agreed with it. None of those checks would have caught the errors in the probe.
 
 ## How to run
 
-Open `A3_watching_the_machine_starter.ipynb` and run the cells. The only dependency is:
+You need Python with `pandas` (plus `jupyter` to open the notebook):
 
-- `pandas`
+```bash
+pip install pandas jupyter
+```
 
-The notebook does not fetch external data — the DataFrames are populated by hand from your own runs and field notes.
+Keep `a3_runs.csv` and `a3_codes.csv` in the same folder as the notebook, then open the notebook and run all the cells:
+
+```bash
+jupyter notebook A3_watching_the_machine_starter.ipynb
+```
+
+If you change either spreadsheet, export it to CSV again (File > Save As > CSV) using the same file name before you re-run the notebook.
+
+To rebuild the HTML version:
+
+```bash
+python -m nbconvert --to html --execute A3_watching_the_machine_starter.ipynb
+```
+
+If you get a `FileNotFoundError`, check that the CSV file names match exactly and that the files are in the same folder as the notebook.
+
+## AI use
+
+The full statement is in the notebook's last section. In short:
+
+- Claude Opus 5.5, ChatGPT (GPT-6 Instant), and Claude Haiku 5.5 are the **subjects** of the study.
+- Claude code was used to help draft the README.md
 
 ## License
 
-Released under the MIT License — see [`LICENSE`](./LICENSE).
+Released under the MIT License. See [`LICENSE`](./LICENSE).
